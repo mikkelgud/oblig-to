@@ -11,7 +11,7 @@ kommentartegnet foran metodekallet tas vekk. Testprogrammet må gi 0 feil før
 Oblig 3 sendes inn!
 */
 
-///// Oppdatert 8. oktober 2019 ///////////////
+////// Oppdatert 8. oktober 2019 ///////////////
 
 import java.util.*;
 
