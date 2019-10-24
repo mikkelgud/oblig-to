@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/oblig-tre.iml" filepath="$PROJECT_DIR$/.idea/oblig-tre.iml" />
       <module fileurl="file://$PROJECT_DIR$/oblig3/oblig3.iml" filepath="$PROJECT_DIR$/oblig3/oblig3.iml" />
-      <module fileurl="file://$PROJECT_DIR$/oblig3/out.iml" filepath="$PROJECT_DIR$/oblig3/out.iml" />
     </modules>
   </component>
 </project>
