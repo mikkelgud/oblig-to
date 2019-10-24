@@ -1,3 +1,5 @@
+package no.oslomet.cs.algdat.Oblig3;
+
 import java.util.NoSuchElementException;
 
 public class TabellKø<T> implements Kø<T>
@@ -82,4 +84,4 @@ public class TabellKø<T> implements Kø<T>
         return til-fra;
     }
 
-} // class TabellKø
+} // class no.oslomet.cs.algdat.Oblig3.TabellKø

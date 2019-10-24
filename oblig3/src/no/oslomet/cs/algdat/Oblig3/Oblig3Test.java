@@ -1,3 +1,6 @@
+package no.oslomet.cs.algdat.Oblig3;
+
+
 ////// Testprogram for Oblig 3 - 2019 ////////////////////////
 
 /*
@@ -11,7 +14,7 @@ kommentartegnet foran metodekallet tas vekk. Testprogrammet må gi 0 feil før
 Oblig 3 sendes inn!
 */
 
-////// Oppdatert 8. oktober 2019 ///////////////
+///// Oppdatert 8. oktober 2019 ///////////////
 
 import java.util.*;
 
@@ -19,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Oblig3Test {
 
-    // OPPGAVE 1 /////////////////////////////////////////////////
+    // OPPGAVE 1 ////////////////////////////////////////////////
     @org.junit.jupiter.api.Test
     void oppgave1() {
         int antallFeil = 0;

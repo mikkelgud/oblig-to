@@ -1,3 +1,5 @@
+package no.oslomet.cs.algdat.Oblig3;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -5,7 +7,7 @@ import java.util.Objects;
 
 public class TabellListe<T> implements Liste<T>
 {
-    // Skal ligge som en indre klasse i class TabellListe
+    // Skal ligge som en indre klasse i class no.oslomet.cs.algdat.Oblig3.TabellListe
     private class TabellListeIterator implements Iterator<T>
     {
         private int denne = 0;       // instansvariabel

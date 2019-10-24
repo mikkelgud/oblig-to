@@ -1,3 +1,5 @@
+package no.oslomet.cs.algdat.Oblig3;
+
 import java.util.*;
 
 public class TabellStakk<T> implements Stakk<T>
@@ -91,4 +93,4 @@ public class TabellStakk<T> implements Stakk<T>
         return s.toString();
     }
 
-} // class TabellStakk
+} // class no.oslomet.cs.algdat.Oblig3.TabellStakk

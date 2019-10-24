@@ -1,3 +1,5 @@
+package no.oslomet.cs.algdat.Oblig3;
+
 public interface Stakk<T>          // eng: Stack
 {
     public void leggInn(T verdi);    // eng: push
@@ -7,4 +9,4 @@ public interface Stakk<T>          // eng: Stack
     public boolean tom();            // eng: isEmpty
     public void nullstill();         // eng: clear
 
-} // interface Stakk
+} // interface no.oslomet.cs.algdat.Oblig3.Stakk

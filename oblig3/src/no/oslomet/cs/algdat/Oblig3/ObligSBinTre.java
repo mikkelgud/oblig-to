@@ -1,4 +1,5 @@
 ////////////////// ObligSBinTre /////////////////////////////////
+package no.oslomet.cs.algdat.Oblig3;
 
 import java.util.*;
 

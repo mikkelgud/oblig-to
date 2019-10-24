@@ -1,3 +1,5 @@
+package no.oslomet.cs.algdat.Oblig3;
+
 import java.util.Iterator;
 
 public interface Liste<T> extends beholder<T> {
@@ -34,4 +36,4 @@ public interface Liste<T> extends beholder<T> {
         if (indeks < 0 ? true : (leggInn ? indeks > antall() : indeks >= antall()))
             throw new IndexOutOfBoundsException(melding(indeks));
     }
-}  // Liste
+}  // no.oslomet.cs.algdat.Oblig3.Liste

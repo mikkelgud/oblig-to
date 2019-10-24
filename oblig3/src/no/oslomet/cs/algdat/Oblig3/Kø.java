@@ -1,3 +1,5 @@
+package no.oslomet.cs.algdat.Oblig3;
+
 public interface Kø<T>              // eng: Queue
 {
     public boolean leggInn(T verdi); // eng: offer/add/enqueue    inn bakerst
@@ -7,4 +9,4 @@ public interface Kø<T>              // eng: Queue
     public boolean tom();            // eng: isEmpty              er køen tom?
     public void nullstill();         // eng: clear                tømmer køen
 
-} // interface Kø
+} // interface no.oslomet.cs.algdat.Oblig3.Kø
