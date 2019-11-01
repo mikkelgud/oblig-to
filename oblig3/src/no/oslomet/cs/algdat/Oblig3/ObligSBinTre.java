@@ -91,7 +91,58 @@ public class ObligSBinTre<T> implements beholder<T>
     @Override
     public boolean fjern(T verdi)
     {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        if(verdi == null){
+            return false;
+        }
+
+        Node<T> p = rot;
+
+        while (p!=null) {
+            int cmp = comp.compare(verdi, p.verdi);
+
+            if (cmp < 0) {
+                p = p.høyre;
+
+            } else {
+                break;
+            }
+            if (p == null) return false;
+
+            if (p.venstre == null || p.høyre == null) {
+
+                Node<T> b = (p.venstre != null) ? p.venstre : p.høyre;
+
+                if (p == rot) {
+                    rot = b;
+                    if (b != null) b.forelder = null;
+                } else if (p == p.forelder.venstre) {
+                    if (b != null) b.forelder = p.forelder;
+                    p.forelder.venstre = b;
+                } else {
+
+                    if (b != null) b.forelder = p.forelder;
+                    p.forelder.høyre = b;
+                }
+            } else {
+
+                Node<T> r = p.høyre;
+                while (r.venstre != null) r = r.venstre;
+                p.verdi = r.verdi;
+
+                if (r.forelder != p) {
+                    Node<T> q = r.forelder;
+                    q.venstre = r.høyre;
+                    if (q.venstre != null) q.venstre.forelder = q;
+                } else {
+                    p.høyre = r.høyre;
+                    if (p.høyre != null) p.høyre.forelder = p;
+
+                }
+            }
+
+        }
+        antall--;
+        return true;
     }
 
     public int fjernAlle(T verdi)
