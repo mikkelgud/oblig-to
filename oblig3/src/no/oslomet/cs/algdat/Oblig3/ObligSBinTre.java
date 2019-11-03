@@ -15,7 +15,8 @@ public class ObligSBinTre<T> implements beholder<T>
         private Node(T verdi, Node<T> v, Node<T> h, Node<T> forelder)
         {
             this.verdi = verdi;
-            venstre = v; høyre = h;
+            venstre = v;
+            høyre = h;
             this.forelder = forelder;
         }
 
