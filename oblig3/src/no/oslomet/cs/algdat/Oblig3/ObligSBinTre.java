@@ -190,7 +190,23 @@ public class ObligSBinTre<T> implements beholder<T>
 
     private static <T> Node<T> nesteInorden(Node<T> p)
     {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        if (p == null){
+            return null;
+        }
+
+        if (p.høyre != null && p != null){
+            return p.forelder;
+        }
+
+        Node tempY = p.forelder;
+        Node tempX = p;
+
+        while (tempY != null && tempX == tempY.høyre){
+            tempX = tempY;
+            tempY = tempY.forelder;
+        }
+
+        return tempY;
     }
 
     @Override
