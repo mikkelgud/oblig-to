@@ -64,7 +64,7 @@ public class ObligSBinTre<T> implements beholder<T>
 
         // p er nå null, dvs. ute av treet, q er den siste vi passerte
 
-        p = new Node<>(verdi,p.venstre,p.høyre,null); // oppretter en ny node
+        p = new Node<>(verdi, null); // oppretter en ny node
 
 
         if (q == null) rot = p;                  // rotnoden
