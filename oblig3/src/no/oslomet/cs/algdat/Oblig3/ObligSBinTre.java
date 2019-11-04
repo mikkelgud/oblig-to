@@ -190,31 +190,71 @@ public class ObligSBinTre<T> implements beholder<T>
         throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
-    private static <T> Node<T> nesteInorden(Node<T> p)
-    {
-      throw new UnsupportedOperationException("Ikke kodet ennå!");
+    private static <T> Node<T> nesteInorden(Node<T> p) {
+
+        if (p == null)        //sjekker om p er null. da returneres null.
+            return null;
+
+        if (p.høyre != null) {      //sjekker om høyre finnes
+            p = p.høyre;            //setter p til høyre.
+            while (p.venstre != null) {     // går gjennom til laveste venstre
+                p = p.venstre;              // setter p til laveste venstre
+            }
+            return p;                       //returnerer p
+        }
+
+        while (p.forelder != null && p.forelder.venstre!= p) {     //sjekker om forelder ikke er null
+            p = p.forelder;                                        // og om forelder sin venstre ikke er p
+        }
+        return p.forelder;                                          //returnerer forelder
     }
 
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder();
-        s.append('[');
-        Node<T> p = rot;
-
-        if (p != null) {
-            while (nesteInorden(p) != null) {
-                p = nesteInorden(p);
-                s.append(',').append(' ').append(p);
-            }
-            s.append(']');
-            return s.toString();
+        StringBuilder sb=new StringBuilder();
+        if (rot==null){
+            sb.append("[]");
+            return sb.toString();
         }
-        return toString();
+
+        sb.append("[");
+        Node<T> first=rot;
+        while (first.venstre!=null){
+            first=first.venstre;
+        }
+
+        if (first.forelder==null && first.høyre==null && first.venstre==null){
+            sb=new StringBuilder();
+            sb.append("["+first.verdi+"]");
+            return sb.toString();
+        }
+
+        while (nesteInorden(first)!=null){
+
+            sb.append(first.verdi+", ");
+            first=nesteInorden(first);
+        }
+        sb.append(first);
+
+        sb.append("]");
+        return sb.toString();
     }
 
-    public String omvendtString()
-    {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+    public String omvendtString() {
+        if (tom()) return "";// tomt tre
+
+
+        Stakk<Node<T>> stakk = new TabellStakk<>();
+        Node<T> p = rot;
+      // Starter i roten og går til venstre
+        for (; p.høyre != null; p = p.høyre);  //Finner elementet lengst ut i listen
+        for (; p.venstre != null; p = p.venstre) stakk.leggInn(p); // itererer tilbake gjennom listen og legger in hvert element i motsatt rekkefølge.
+
+        System.out.println(stakk.toString());
+        return stakk.toString();
+
+
+
     }
 
     public String høyreGren()
