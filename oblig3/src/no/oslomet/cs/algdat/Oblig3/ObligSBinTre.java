@@ -45,6 +45,9 @@ public class ObligSBinTre<T> implements beholder<T>
     public boolean leggInn(T verdi){
         Objects.requireNonNull(verdi, "Ulovlig med nullverdier!");
 
+        //FIXME: både p og q blir satt til null. Det gjør at den hopper over while løkken.
+
+
         Node<T> p = rot, q = null;               // p starter i roten
         int cmp = 0;                             // hjelpevariabel
 
