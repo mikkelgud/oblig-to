@@ -42,9 +42,36 @@ public class ObligSBinTre<T> implements beholder<T>
     }
 
     @Override
-    public boolean leggInn(T verdi)
-    {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+    public boolean leggInn(T verdi){
+        Objects.requireNonNull(verdi, "Ulovlig med nullverdier!");
+
+        Node<T> p = rot, q = null;               // p starter i roten
+        int cmp = 0;                             // hjelpevariabel
+
+        while (p != null)       // fortsetter til p er ute av treet
+        {
+            q = p;                                 // q forelder til p
+            cmp = comp.compare(verdi,p.verdi);     // bruker komparatoren
+            p = cmp < 0 ? p.venstre : p.høyre;     // flytter p
+        }
+
+        // p er nå null, dvs. ute av treet, q er den siste vi passerte
+
+        p = new Node<>(verdi,p.venstre,p.høyre,null); // oppretter en ny node
+
+
+        if (q == null) rot = p;                  // rotnoden
+        else if (cmp < 0) q.venstre = p;         // til venstre for q
+        else q.høyre = p;                        // til høyre for q
+
+        if(q!= null){
+            p.forelder = q;
+        } else {
+            p.forelder = null;
+        }
+
+        antall++;                                // én verdi mer i treet
+        return true;                             // vellykket innlegging
     }
 
     @Override
@@ -82,9 +109,23 @@ public class ObligSBinTre<T> implements beholder<T>
         return antall;
     }
 
-    public int antall(T verdi)
-    {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+    public int antall(T verdi) {
+        if (verdi == null) return 0;
+
+        int a = 0; // Oppstartsverdi
+
+        Node<T> p = rot;
+        while (p != null) {
+            int cmp = comp.compare(verdi, p.verdi);
+            if (cmp < 0) p = p.venstre;      // går til venstre
+            else if (cmp > 0) p = p.høyre;   // går til høyre
+            else {
+                a++;
+                p = p.høyre;
+            }
+
+        }
+        return a;
     }
 
     @Override
