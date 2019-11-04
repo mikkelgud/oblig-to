@@ -9,7 +9,13 @@ public class Main {
         ObligSBinTre<Integer> tre = new ObligSBinTre<>(Comparator.naturalOrder());
         for (int verdi: a){
             tre.leggInn(verdi);
+
+
+
         }
         System.out.println(tre.antall());
+
+
+
     }
 }
