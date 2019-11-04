@@ -49,6 +49,7 @@ public class ObligSBinTre<T> implements beholder<T>
         Objects.requireNonNull(verdi, "Ulovlig med nullverdier!");
 
         //FIXME: både p og q blir satt til null. Det gjør at den hopper over while løkken.
+//        Dette skjer fordi rot er instaniert til null
 
 
         Node<T> p = rot, q = null;               // p starter i roten
