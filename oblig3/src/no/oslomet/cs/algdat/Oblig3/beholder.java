@@ -24,6 +24,7 @@ public interface beholder<T> extends Iterable<T> {
         Objects.requireNonNull(p);                       // kaster unntak
 
         boolean fjernet = false;
+
         for (Iterator<T> i = iterator(); i.hasNext(); )  // løkke
         {
             if (p.test(i.next()))                          // betingelsen
