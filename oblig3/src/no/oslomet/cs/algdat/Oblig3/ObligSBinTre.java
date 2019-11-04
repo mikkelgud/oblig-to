@@ -48,6 +48,10 @@ public class ObligSBinTre<T> implements beholder<T>
     {
         Objects.requireNonNull(verdi, "Ulovlig med nullverdier!");
 
+        //FIXME: både p og q blir satt til null. Det gjør at den hopper over while løkken.
+//        Dette skjer fordi rot er instaniert til null
+
+
         Node<T> p = rot, q = null;               // p starter i roten
         int cmp = 0;                             // hjelpevariabel
 
@@ -236,9 +240,21 @@ public class ObligSBinTre<T> implements beholder<T>
         return sb.toString();
     }
 
-    public String omvendtString()
-    {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+    public String omvendtString() {
+        if (tom()) return "";// tomt tre
+
+
+        Stakk<Node<T>> stakk = new TabellStakk<>();
+        Node<T> p = rot;
+      // Starter i roten og går til venstre
+        for (; p.høyre != null; p = p.høyre);  //Finner elementet lengst ut i listen
+        for (; p.venstre != null; p = p.venstre) stakk.leggInn(p); // itererer tilbake gjennom listen og legger in hvert element i motsatt rekkefølge.
+
+        System.out.println(stakk.toString());
+        return stakk.toString();
+
+
+
     }
 
     public String høyreGren()
