@@ -48,6 +48,7 @@ public class ObligSBinTre<T> implements beholder<T>
     {
         Objects.requireNonNull(verdi, "Ulovlig med nullverdier!");
 
+        //FIXME: både p og q blir satt til null. Det gjør at den hopper over while løkken.
 //        Dette skjer fordi rot er instaniert til null
 
 
@@ -58,8 +59,7 @@ public class ObligSBinTre<T> implements beholder<T>
         {
             q = p;                                 // q forelder til p
             cmp = comp.compare(verdi,p.verdi);     // bruker komparatoren
-            p = cmp < 0 ? p.venstre : p.høyre;// flytter p
-
+            p = cmp < 0 ? p.venstre : p.høyre;     // flytter p
         }
 
         // p er nå null, dvs. ute av treet, q er den siste vi passerte
@@ -206,7 +206,10 @@ public class ObligSBinTre<T> implements beholder<T>
     }
 
     @Override
-    public boolean tom() {return antall == 0;}
+    public boolean tom()
+    {
+        return antall == 0;
+    }
 
     @Override
     public void nullstill()
@@ -214,26 +217,54 @@ public class ObligSBinTre<T> implements beholder<T>
         throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
-    private static <T> Node<T> nesteInorden(Node<T> p)
-    {
-      throw new UnsupportedOperationException("Ikke kodet ennå!");
+    private static <T> Node<T> nesteInorden(Node<T> p) {
+
+        if (p == null)        //sjekker om p er null. da returneres null.
+            return null;
+
+        if (p.høyre != null) {      //sjekker om høyre finnes
+            p = p.høyre;            //setter p til høyre.
+            while (p.venstre != null) {     // går gjennom til laveste venstre
+                p = p.venstre;              // setter p til laveste venstre
+            }
+            return p;                       //returnerer p
+        }
+
+        while (p.forelder != null && p.forelder.venstre!= p) {     //sjekker om forelder ikke er null
+            p = p.forelder;                                        // og om forelder sin venstre ikke er p
+        }
+        return p.forelder;                                          //returnerer forelder
     }
 
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder();
-        s.append('[');
-        Node<T> p = rot;
-
-        if (p != null) {
-            while (nesteInorden(p) != null) {
-                p = nesteInorden(p);
-                s.append(',').append(' ').append(p);
-            }
-            s.append(']');
-            return s.toString();
+        StringBuilder sb=new StringBuilder();
+        if (rot==null){
+            sb.append("[]");
+            return sb.toString();
         }
-        return toString();
+
+        sb.append("[");
+        Node<T> first=rot;
+        while (first.venstre!=null){
+            first=first.venstre;
+        }
+
+        if (first.forelder==null && first.høyre==null && first.venstre==null){
+            sb=new StringBuilder();
+            sb.append("["+first.verdi+"]");
+            return sb.toString();
+        }
+
+        while (nesteInorden(first)!=null){
+
+            sb.append(first.verdi+", ");
+            first=nesteInorden(first);
+        }
+        sb.append(first);
+
+        sb.append("]");
+        return sb.toString();
     }
 
     public String omvendtString() {
