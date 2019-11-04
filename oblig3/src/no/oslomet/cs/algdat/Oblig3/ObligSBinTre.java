@@ -155,21 +155,26 @@ public class ObligSBinTre<T> implements beholder<T>
 
     public int antall(T verdi)
     {
+        if(verdi==null) return 0;       //Sjekker om verdi er null. Da returneres 0.
 
-        Node<T> p = rot;
+        int antall=0;           //Setter antall til 0.
 
-        p.høyre = rot.høyre;
-        p.venstre = rot.venstre;
+        Node<T> p = rot;        // p blir rot-noden
 
-        if (verdi == null){
-            antall = 0;
-            return antall;
+        while (p != null)            // Går igjennom til p er null.
+        {
+            int cmp = comp.compare(verdi,p.verdi);       // sammenligner
+            if (cmp < 0) {
+                p = p.venstre;                      // går mot venstre
+            }
+            else if (cmp > 0) {
+                p = p.høyre;                        // går mot høyre
+            }
+            else{
+                antall++;                        // plusser på antall
+                p = p.høyre;
+            }
         }
-
-        while(p.venstre != null && p.høyre != null){
-            antall++;
-        }
-
         return antall;
     }
 
