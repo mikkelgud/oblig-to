@@ -18,7 +18,8 @@ Oblig 3 sendes inn!
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
+
 
 public class Oblig3Test {
 
@@ -49,7 +50,6 @@ public class Oblig3Test {
             System.out.println
                     ("Oppgave 1c: Antall blir ikke oppdatert!");
         }
-
         assertEquals(antallFeil, 0);
     }  // slutt på Oppgave 1
 
