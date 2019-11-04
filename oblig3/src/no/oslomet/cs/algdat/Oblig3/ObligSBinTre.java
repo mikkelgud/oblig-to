@@ -100,50 +100,47 @@ public class ObligSBinTre<T> implements beholder<T>
     }
 
     @Override
-    public boolean fjern(T verdi) {
-        if (verdi == null) {
-            return false;  // treet har ingen nullverdier
-        }
+    public boolean fjern(T verdi)
+    {
+        if (verdi == null) return false;  // treet har ingen nullverdier
+
         Node<T> p = rot, q = null;   // q skal være forelder til p
 
-        while (p != null) // leter etter verdi
+        while (p != null)            // leter etter verdi
         {
-            int cmp = comp.compare(verdi, p.verdi);      // sammenligner
-            if (cmp < 0) {
-                q = p;
-                p = p.venstre;
-            } // går til venstre
-            else if (cmp > 0) {
-                q = p;
-                p = p.høyre;
-            } // går til høyre
-            else {
-                break;    // den søkte verdien ligger i p
-            }
+            int cmp = comp.compare(verdi,p.verdi);      // sammenligner
+            if (cmp < 0) { q = p; p = p.venstre; }      // går til venstre
+            else if (cmp > 0) { q = p; p = p.høyre; }   // går til høyre
+            else break;    // den søkte verdien ligger i p
         }
-        if (p == null) {
-            return false;   // finner ikke verdi
-        }
-        if (p.venstre == null || p.høyre == null) // Tilfelle 1) og 2)
+        if (p == null) return false;   // finner ikke verdi
+
+        if (p.venstre == null || p.høyre == null)  // Tilfelle 1) og 2)
         {
             Node<T> b = p.venstre != null ? p.venstre : p.høyre;  // b for barn
             if (p == rot) {
                 rot = b;
-            } else if (p == q.venstre) {
-                q.venstre = b;
-                if (b != null) {
-                    b.forelder = q;
-                }
-            } else {
-                q.høyre = b;
-                if (b != null) {
-                    b.forelder = q;
-                }
+                if(b != null)
+                    b.forelder = null;
             }
-        } else // Tilfelle 3)
+            else if (p == q.venstre) {
+                q.venstre = b;
+
+                if(b != null)
+                    b.forelder = q;
+            }
+            else {
+                q.høyre = b;
+
+                if(b != null)
+                    b.forelder = q;
+            }
+        }
+        else  // Tilfelle 3)
         {
             Node<T> s = p, r = p.høyre;   // finner neste i inorden
-            while (r.venstre != null) {
+            while (r.venstre != null)
+            {
                 s = r;    // s er forelder til r
                 r = r.venstre;
             }
@@ -152,8 +149,13 @@ public class ObligSBinTre<T> implements beholder<T>
 
             if (s != p) {
                 s.venstre = r.høyre;
-            } else {
+                if(r.høyre != null)
+                    r.høyre.forelder = s;
+            }
+            else {
                 s.høyre = r.høyre;
+                if(r.høyre != null)
+                    r.høyre.forelder = s;
             }
         }
 
@@ -161,18 +163,18 @@ public class ObligSBinTre<T> implements beholder<T>
         return true;
     }
 
-    public int fjernAlle(T verdi) {
-        if (tom()) {
-            return 0;
-        }
-        int teller = 0;
+    public int fjernAlle(T verdi){
+
+    if (tom()) {
+    return 0;
+}
+    int teller = 0;
 
         while (fjern(verdi) != false) {
-            teller++;
-        }
+    teller++;
+}
         return teller;
-    }
-
+}
 
     @Override
     public int antall()
@@ -182,25 +184,23 @@ public class ObligSBinTre<T> implements beholder<T>
 
     public int antall(T verdi)
     {
-        if(verdi==null) return 0;       //Sjekker om verdi er null. Da returneres 0.
+        if(verdi == null)
+            return 0;
 
-        int antall=0;           //Setter antall til 0.
+        int antall = 0;
 
-        Node<T> p = rot;        // p blir rot-noden
+        Node<T> p = rot;
 
-        while (p != null)            // Går igjennom til p er null.
-        {
-            int cmp = comp.compare(verdi,p.verdi);       // sammenligner
-            if (cmp < 0) {
-                p = p.venstre;                      // går mot venstre
-            }
-            else if (cmp > 0) {
-                p = p.høyre;                        // går mot høyre
-            }
+        while(p != null) {
+
+            int cmp = comp.compare(verdi, p.verdi);
+            if(cmp < 0) p = p.venstre;
             else{
-                antall++;                        // plusser på antall
+                if(cmp == 0)
+                    antall++;
                 p = p.høyre;
             }
+
         }
         return antall;
     }
@@ -214,26 +214,29 @@ public class ObligSBinTre<T> implements beholder<T>
     @Override
     public void nullstill()
     {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        rot = null;
+        antall = 0;
     }
 
-    private static <T> Node<T> nesteInorden(Node<T> p) {
+    private static <T> Node<T> nesteInorden(Node<T> p)
+    {
 
-        if (p == null)        //sjekker om p er null. da returneres null.
-            return null;
+        if(p.høyre != null) {
+            p = p.høyre;
 
-        if (p.høyre != null) {      //sjekker om høyre finnes
-            p = p.høyre;            //setter p til høyre.
-            while (p.venstre != null) {     // går gjennom til laveste venstre
-                p = p.venstre;              // setter p til laveste venstre
+            while(p.venstre != null)
+                p = p.venstre;
+
+            return p;
+        }
+        else {
+            Node<T> q = p.forelder;
+            while(q != null && p == q.høyre) {
+                p = q;
+                q = p.forelder;
             }
-            return p;                       //returnerer p
         }
-
-        while (p.forelder != null && p.forelder.venstre!= p) {     //sjekker om forelder ikke er null
-            p = p.forelder;                                        // og om forelder sin venstre ikke er p
-        }
-        return p.forelder;                                          //returnerer forelder
+        return p.forelder;
     }
 
     @Override

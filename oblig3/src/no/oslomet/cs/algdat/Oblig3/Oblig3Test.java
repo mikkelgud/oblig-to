@@ -391,7 +391,7 @@ public class Oblig3Test {
         tre.nullstill();
         tid = System.currentTimeMillis() - tid;
 
-        if (tid < 10) {
+        if (tid > 10) {
             antallFeil++;
             System.out.println("Oppgave 5v: Har du kodet nullstill() ved kun");
             System.out.println("nullstille hode og antall? Alle nodeverdier og");
