@@ -48,10 +48,6 @@ public class ObligSBinTre<T> implements beholder<T>
     {
         Objects.requireNonNull(verdi, "Ulovlig med nullverdier!");
 
-        //FIXME: både p og q blir satt til null. Det gjør at den hopper over while løkken.
-//        Dette skjer fordi rot er instaniert til null
-
-
         Node<T> p = rot, q = null;               // p starter i roten
         int cmp = 0;                             // hjelpevariabel
 
@@ -289,12 +285,30 @@ public class ObligSBinTre<T> implements beholder<T>
 
     public String høyreGren()
     {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        StringJoiner s = new StringJoiner(", ", "[", "]");
+
+        Node<T> p = rot;
+
+        while(p != null) {
+            s.add(p.verdi.toString());
+            p = p.høyre;
+            }
+
+        return s.toString();
     }
 
     public String lengstGren()
     {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        StringJoiner s = new StringJoiner(", ", "[", "]");
+
+        Node<T> p = rot;
+
+        while(p != null) {
+            s.add(p.verdi.toString());
+            p = p.venstre;
+        }
+
+        return s.toString();
     }
 
     public String[] grener()
