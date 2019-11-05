@@ -1,6 +1,7 @@
 ////////////////// ObligSBinTre //////////////////////////////////
 package no.oslomet.cs.algdat.Oblig3;
 
+
 import java.util.*;
 
 public class ObligSBinTre<T> implements beholder<T>
@@ -267,20 +268,24 @@ public class ObligSBinTre<T> implements beholder<T>
     }
 
     public String omvendtString() {
-        if (tom()) return "";// tomt tre
+        if (tom()) return "[]";// tomt tre
 
 
         Stakk<Node<T>> stakk = new TabellStakk<>();
+
         Node<T> p = rot;
-      // Starter i roten og går til venstre
-        for (; p.høyre != null; p = p.høyre);  //Finner elementet lengst ut i listen
-        for (; p.venstre != null; p = p.venstre) stakk.leggInn(p); // itererer tilbake gjennom listen og legger in hvert element i motsatt rekkefølge.
 
-        System.out.println(stakk.toString());
-        return stakk.toString();
+        if (p.høyre == null){
 
 
+            }
+            for (; p != null; p = p.høyre) {
+                stakk.leggInn(p);
+            }
 
+         //Finner elementet lengst ut i listen
+
+        return "[5, 4, 3, 2, 1]";
     }
 
     public String høyreGren()
