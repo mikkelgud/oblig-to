@@ -20,7 +20,7 @@ public class Main {
             tre.leggInn(c);
         }
 
-        System.out.println(tre.høyreGren() + " ");
+        System.out.println(tre.høyreGren() + " " + tre.lengstGren());
 
         //System.out.println(tre.antall());
 

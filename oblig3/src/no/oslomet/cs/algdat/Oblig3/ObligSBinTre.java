@@ -287,31 +287,31 @@ public class ObligSBinTre<T> implements beholder<T>
     {
         StringJoiner s = new StringJoiner(", ", "[", "]");
 
-        Node<T> p = rot;
-        if (p == null){
+        Node<T> p = rot;                // setter p til rot.
+        if (p == null){                 //Hvis treet er tomt returneres [].
             s.add("");
             return s.toString();
         }
 
-        s.add(p.toString());
+        s.add(p.toString());            //Legger til roten i utStringen.
 
-        while(p.høyre != null || p.venstre != null) {
-            if(p.høyre != null && p.venstre != null){
+        while(p.høyre != null || p.venstre != null) {       //Sjekker om endten venstre eller høyre har verdi.
+            if(p.høyre != null && p.venstre != null){       //hvis begge sider har verdi går vi mot høyre.
                 s.add(p.høyre.toString());
                 p = p.høyre;
             }
-            if(p.venstre != null && p.høyre == null){
+            if(p.venstre != null && p.høyre == null){       //hvis bare venstre har verdi går vi mot venstre.
                 s.add(p.venstre.toString());
                 p = p.venstre;
             }
 
-            if (p.høyre != null && p.venstre == null){
+            if (p.høyre != null && p.venstre == null){      //hvis bare høyre har verdi går vi mot høyre.
                 s.add(p.høyre.toString());
                 p = p.høyre;
             }
             }
 
-        return s.toString();
+        return s.toString();                                //returnerer den endelige stringen.
     }
 
     public String lengstGren()
@@ -319,6 +319,8 @@ public class ObligSBinTre<T> implements beholder<T>
         StringJoiner s = new StringJoiner(", ", "[", "]");
 
         Node<T> p = rot;
+
+        int teller = 0;
 
         if (p == null){
             s.add("");
@@ -331,7 +333,7 @@ public class ObligSBinTre<T> implements beholder<T>
         while(p.venstre != null) {
             p = p.venstre;
             s.add(p.verdi.toString());
-
+            teller++;
         }
 
         return s.toString();
