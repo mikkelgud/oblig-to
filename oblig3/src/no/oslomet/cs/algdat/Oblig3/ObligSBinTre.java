@@ -320,6 +320,13 @@ public class ObligSBinTre<T> implements beholder<T>
 
         Node<T> p = rot;
 
+        if (p == null){
+            s.add("");
+            return s.toString();
+        }
+
+        s.add(p.verdi.toString());
+
         while (p.venstre != null || p.høyre != null) {
             if (p.venstre != null){
                 p = p.venstre;
