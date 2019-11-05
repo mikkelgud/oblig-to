@@ -320,28 +320,41 @@ public class ObligSBinTre<T> implements beholder<T>
 
         Node<T> p = rot;
 
-        int teller = 0;
-
-        if (p == null){
-            s.add("");
-            return s.toString();
+        while (p.venstre != null || p.høyre != null) {
+            if (p.venstre != null){
+                p = p.venstre;
+                s.add(p.verdi.toString());
+            }
+            else{
+                p = p.høyre;
+                s.add(p.verdi.toString());
+            }
         }
-
-        s.add(p.toString());
-
-
-        while(p.venstre != null) {
-            p = p.venstre;
-            s.add(p.verdi.toString());
-            teller++;
-        }
-
         return s.toString();
     }
 
     public String[] grener()
     {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        if(tom()){
+            return new String[0];
+        }
+
+        StringBuilder s = new StringBuilder();
+        String[] streng = new String[1];
+        Node<T> p = rot;
+
+        while (p.venstre != null || p.høyre != null){
+            if(p.venstre != null){
+                p = p.venstre;
+                s.append(p);
+            }
+            if (p.høyre != null){
+                p = p.høyre;
+                s.append(p);
+            }
+        }
+      //  streng[] = s.toString();
+        return streng;
     }
 
     public String bladnodeverdier()
