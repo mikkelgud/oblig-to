@@ -316,11 +316,19 @@ public class ObligSBinTre<T> implements beholder<T>
         StringJoiner s = new StringJoiner(", ", "[", "]");
 
         Node<T> p = rot;
+        int teller = 0;
 
-        while(p != null) {
-            s.add(p.verdi.toString());
+        while(p.venstre != null) {
             p = p.venstre;
         }
+
+        while (p.forelder != null){
+            s.add(p.forelder.toString());
+            teller++;
+            p = p.forelder;
+        }
+
+
 
         return s.toString();
     }
