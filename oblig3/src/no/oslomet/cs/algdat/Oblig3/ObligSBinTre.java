@@ -368,7 +368,12 @@ public class ObligSBinTre<T> implements beholder<T>
 
         private BladnodeIterator()  // konstruktør
         {
-            throw new UnsupportedOperationException("Ikke kodet ennå!");
+            Node<T> p = rot;
+
+            while(p.venstre != null){               //setter p til første bladnode.
+                p = p.venstre;
+            }
+
         }
 
         @Override
