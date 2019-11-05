@@ -288,6 +288,10 @@ public class ObligSBinTre<T> implements beholder<T>
         StringJoiner s = new StringJoiner(", ", "[", "]");
 
         Node<T> p = rot;
+        if (p == null){
+            s.add("");
+            return s.toString();
+        }
 
         s.add(p.toString());
 
@@ -315,21 +319,20 @@ public class ObligSBinTre<T> implements beholder<T>
         StringJoiner s = new StringJoiner(", ", "[", "]");
 
         Node<T> p = rot;
-        int teller = 0;
+
+        if (p == null){
+            s.add("");
+            return s.toString();
+        }
+
+        s.add(p.toString());
+
 
         while(p.venstre != null) {
             p = p.venstre;
             s.add(p.verdi.toString());
-            teller++;
+
         }
-
-        while (p.forelder != null){
-            s.add(p.forelder.verdi.toString());
-            teller++;
-            p = p.forelder;
-        }
-
-
 
         return s.toString();
     }
