@@ -364,6 +364,9 @@ public class ObligSBinTre<T> implements beholder<T>
     public String[] grener()
     {
         String[] streng = new String[0];
+        StringBuilder s = new StringBuilder();
+        int teller = 0;
+        int telleren = 0;
 
         if(rot == null){
             return streng;
@@ -379,11 +382,9 @@ public class ObligSBinTre<T> implements beholder<T>
         while(p.venstre != null){
             p = p.venstre;
         }
-        StringBuilder s = new StringBuilder();
-        int teller = 0;
-        int telleren = 0;
+
         Node<T> q = p;
-        Node<T> blad;
+        Node<T> r;
 
         while(nesteInorden(q) != null){
             if(nesteInorden(q).venstre == null && nesteInorden(q).høyre == null){  //funnet bladnode
@@ -411,11 +412,11 @@ public class ObligSBinTre<T> implements beholder<T>
         while (nesteInorden(q) != null){
             if(nesteInorden(q).venstre == null && nesteInorden(q).høyre == null){
                 s = new StringBuilder();
-                blad = nesteInorden(q);
+                r = nesteInorden(q);
 
-                while (blad.forelder != null){
-                    s.insert(0,blad.verdi + ", ");
-                    blad = blad.forelder;
+                while (r.forelder != null){
+                    s.insert(0,r.verdi + ", ");
+                    r = r.forelder;
                 }
                 s.insert(0, "[" + rot.verdi + ", ");
                 s.deleteCharAt(s.length()-1);
