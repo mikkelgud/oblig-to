@@ -74,7 +74,9 @@ public class ObligSBinTre<T> implements beholder<T>
             p.forelder = null;
         }
 
-        antall++;                                // én verdi mer i treet
+        antall++;
+        endringer++;
+        // én verdi mer i treet
         return true;                             // vellykket innlegging
     }
 
@@ -156,7 +158,9 @@ public class ObligSBinTre<T> implements beholder<T>
             }
         }
 
-        antall--;   // det er nå én node mindre i treet
+        antall--;
+        endringer++;
+        // det er nå én node mindre i treet
         return true;
     }
 
@@ -213,6 +217,7 @@ public class ObligSBinTre<T> implements beholder<T>
     {
         rot = null;
         antall = 0;
+        endringer++;
     }
 
     private static <T> Node<T> nesteInorden(Node<T> p)
