@@ -326,29 +326,40 @@ public class ObligSBinTre<T> implements beholder<T>
 
     public String lengstGren()
     {
-        StringJoiner s = new StringJoiner(", ", "[", "]");
+        if (tom()){
+            return "[]";
+        }
 
         Node<T> p = rot;
 
-        if (p == null){
-            s.add("");
-            return s.toString();
+        Kø<Node<T>> tabellKø = new TabellKø<>();
+        tabellKø.leggInn(p);
+
+        p = null;
+
+        while (!tabellKø.tom())
+        {
+            p = tabellKø.taUt();
+
+            if (p.høyre != null) {
+                tabellKø.leggInn(p.høyre);
+            }
+
+            if (p.venstre != null) {
+                tabellKø.leggInn(p.venstre);
+            }
         }
 
-        s.add(p.verdi.toString());
-
-        while (p.venstre != null || p.høyre != null) {
-            if (p.venstre != null){
-                p = p.venstre;
-                s.add(p.verdi.toString());
-            }
-            else{
-                p = p.høyre;
-                s.add(p.verdi.toString());
-            }
+        Stakk<T> tabellStakk = new TabellStakk<>();
+        while (p != null)
+        {
+            tabellStakk.leggInn(p.verdi);
+            p = p.forelder;
         }
-        return s.toString();
+
+        return tabellStakk.toString();
     }
+
 
     public String[] grener()
     {
@@ -457,12 +468,12 @@ public class ObligSBinTre<T> implements beholder<T>
     {
         if (tom()) return "[]";
 
-        StringJoiner sj = new StringJoiner(", ", "[", "]");
+        StringJoiner utString = new StringJoiner(", ", "[", "]");
 
         Node<T> p = førsteNode(rot);
 
         while (true){
-            sj.add(p.verdi.toString());
+            utString.add(p.verdi.toString());
 
             if (p.forelder == null){
                 break;
@@ -477,7 +488,7 @@ public class ObligSBinTre<T> implements beholder<T>
                 p = førsteNode(f.høyre);
             }
         }
-        return sj.toString();
+        return utString.toString();
     }
 
     private static <T> Node<T> nesteNode(Node<T> p) {
