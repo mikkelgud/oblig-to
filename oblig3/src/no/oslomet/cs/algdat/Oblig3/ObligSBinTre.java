@@ -1,6 +1,7 @@
 ////////////////// ObligSBinTre //////////////////////////////////
 package no.oslomet.cs.algdat.Oblig3;
 
+import javax.swing.tree.TreeNode;
 import java.util.*;
 
 public class ObligSBinTre<T> implements beholder<T>
@@ -380,6 +381,33 @@ public class ObligSBinTre<T> implements beholder<T>
         return new BladnodeIterator();
     }
 
+    //Hjelpemotode som finner førstebladnode.
+    private static <T> Node<T> førsteBladnode(Node<T> p)
+    {
+        while (true)
+        {
+            if (p.venstre != null) p = p.venstre;
+
+            else if (p.høyre != null) p = p.høyre;
+
+            else return p;  // p er en bladnode
+        }
+    }
+
+    // hjelpemetode som med utgangspunkt i en bladnode p finner neste bladnode.
+    private static <T> Node<T> nesteBladnode(Node<T> p)
+    {
+        Node<T> f = p.forelder;  // går først oppover
+        while (f != null && (p == f.høyre || f.høyre == null))
+        {
+            p = f;
+
+            f = f.forelder;
+        }
+
+        return f == null ? null : førsteBladnode(f.høyre);
+    }
+
     private class BladnodeIterator implements Iterator<T>
     {
         private Node<T> p = rot, q = null;
@@ -388,11 +416,12 @@ public class ObligSBinTre<T> implements beholder<T>
 
         private BladnodeIterator()  // konstruktør
         {
-            Node<T> p = rot;
 
-            while(p.venstre != null){               //setter p til første bladnode.
-                p = p.venstre;
-            }
+            if (tom()) return;
+            p = førsteBladnode(rot);  // bruker en hjelpemetode
+            q = null;
+            removeOK = false;
+            iteratorendringer = endringer;
 
         }
 
@@ -405,8 +434,17 @@ public class ObligSBinTre<T> implements beholder<T>
         @Override
         public T next()
         {
-            throw new UnsupportedOperationException("Ikke kodet ennå!");
+            if (!hasNext()) throw new NoSuchElementException("Ikke flere bladnodeverdier!");
+
+            if (endringer != iteratorendringer) throw new
+                    ConcurrentModificationException("Treet har blitt endret!");
+
+            removeOK = true;
+            q = p; p = nesteBladnode(p);  // bruker en hjelpemetode
+
+            return q.verdi;
         }
+
 
         @Override
         public void remove()
