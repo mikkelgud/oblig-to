@@ -326,51 +326,108 @@ public class ObligSBinTre<T> implements beholder<T>
 
     public String lengstGren()
     {
-        StringJoiner s = new StringJoiner(", ", "[", "]");
+        if (tom()){
+            return "[]";
+        }
 
         Node<T> p = rot;
 
-        if (p == null){
-            s.add("");
-            return s.toString();
+        Kø<Node<T>> tabellKø = new TabellKø<>();
+        tabellKø.leggInn(p);
+
+        p = null;
+
+        while (!tabellKø.tom())
+        {
+            p = tabellKø.taUt();
+
+            if (p.høyre != null) {
+                tabellKø.leggInn(p.høyre);
+            }
+
+            if (p.venstre != null) {
+                tabellKø.leggInn(p.venstre);
+            }
         }
 
-        s.add(p.verdi.toString());
-
-        while (p.venstre != null || p.høyre != null) {
-            if (p.venstre != null){
-                p = p.venstre;
-                s.add(p.verdi.toString());
-            }
-            else{
-                p = p.høyre;
-                s.add(p.verdi.toString());
-            }
+        Stakk<T> tabellStakk = new TabellStakk<>();
+        while (p != null)
+        {
+            tabellStakk.leggInn(p.verdi);
+            p = p.forelder;
         }
-        return s.toString();
+
+        return tabellStakk.toString();
     }
+
 
     public String[] grener()
     {
-        if(tom()){
-            return new String[0];
+        String[] streng = new String[0];
+        StringBuilder s = new StringBuilder();
+        int teller = 0;
+        int telleren = 0;
+
+        if(rot == null){
+            return streng;
+        }
+        streng = new String[1];
+        if(rot.høyre == null && rot.venstre == null){
+            streng[0] = "["+rot+"]";
+            return streng;
         }
 
-        StringBuilder s = new StringBuilder();
-        String[] streng = new String[1];
         Node<T> p = rot;
 
-        while (p.venstre != null || p.høyre != null){
-            if(p.venstre != null){
-                p = p.venstre;
-                s.append(p);
-            }
-            if (p.høyre != null){
-                p = p.høyre;
-                s.append(p);
-            }
+        while(p.venstre != null){
+            p = p.venstre;
         }
-      // streng[] = s.toString();
+
+        Node<T> q = p;
+        Node<T> r;
+
+        while(nesteInorden(q) != null){
+            if(nesteInorden(q).venstre == null && nesteInorden(q).høyre == null){  //funnet bladnode
+                telleren++;
+            }
+            q = nesteInorden(q);
+        }
+
+        streng = new String[telleren];
+        q = p;
+        while(q.forelder != null){
+            s.insert(0,q.verdi+" ");
+            q = q.forelder;
+        }
+
+        s.insert(0, "[" + rot.verdi + ", ");
+        s.deleteCharAt(s.length()-1);
+        s.deleteCharAt(s.length()-1);
+        s.append("]");
+
+        streng[teller] = s.toString();
+        teller++;
+        q = p;
+
+        while (nesteInorden(q) != null){
+            if(nesteInorden(q).venstre == null && nesteInorden(q).høyre == null){
+                s = new StringBuilder();
+                r = nesteInorden(q);
+
+                while (r.forelder != null){
+                    s.insert(0,r.verdi + ", ");
+                    r = r.forelder;
+                }
+                s.insert(0, "[" + rot.verdi + ", ");
+                s.deleteCharAt(s.length()-1);
+                s.deleteCharAt(s.length()-1);
+                s.append("]");
+
+                streng[teller-1] = s.toString();
+                teller++;
+            }
+            q = nesteInorden(q);
+        }
         return streng;
     }
 
@@ -395,29 +452,18 @@ public class ObligSBinTre<T> implements beholder<T>
         }
     }
 
-    private static <T> Node<T> førsteNode(Node<T> p)
-    {
-        while (true){
-            if (p.venstre != null){
-                p = p.venstre;
-            }
-            else if (p.høyre != null){
-                p = p.høyre;
-            }
-            else return p;
-        }
-    }
+
 
     public String postString()
     {
         if (tom()) return "[]";
 
-        StringJoiner sj = new StringJoiner(", ", "[", "]");
+        StringJoiner utString = new StringJoiner(", ", "[", "]");
 
-        Node<T> p = førsteNode(rot);
+        Node<T> p = førsteBladnode(rot);
 
         while (true){
-            sj.add(p.verdi.toString());
+            utString.add(p.verdi.toString());
 
             if (p.forelder == null){
                 break;
@@ -429,22 +475,11 @@ public class ObligSBinTre<T> implements beholder<T>
                 p = f;
             }
             else{
-                p = førsteNode(f.høyre);
+                p = førsteBladnode(f.høyre);
             }
         }
-        return sj.toString();
+        return utString.toString();
     }
-
-    private static <T> Node<T> nesteNode(Node<T> p) {
-
-        Node<T> f = p.forelder;
-        while (f != null && (p == f.høyre || f.høyre == null)){
-            p = f; f = f.forelder;
-        }
-        return f == null ? null : førsteNode(f.høyre);
-    }
-
-
 
     @Override
     public Iterator<T> iterator()
