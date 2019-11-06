@@ -452,18 +452,7 @@ public class ObligSBinTre<T> implements beholder<T>
         }
     }
 
-    private static <T> Node<T> førsteNode(Node<T> p)
-    {
-        while (true){
-            if (p.venstre != null){
-                p = p.venstre;
-            }
-            else if (p.høyre != null){
-                p = p.høyre;
-            }
-            else return p;
-        }
-    }
+
 
     public String postString()
     {
@@ -471,7 +460,7 @@ public class ObligSBinTre<T> implements beholder<T>
 
         StringJoiner utString = new StringJoiner(", ", "[", "]");
 
-        Node<T> p = førsteNode(rot);
+        Node<T> p = førsteBladnode(rot);
 
         while (true){
             utString.add(p.verdi.toString());
@@ -486,22 +475,11 @@ public class ObligSBinTre<T> implements beholder<T>
                 p = f;
             }
             else{
-                p = førsteNode(f.høyre);
+                p = førsteBladnode(f.høyre);
             }
         }
         return utString.toString();
     }
-
-    private static <T> Node<T> nesteNode(Node<T> p) {
-
-        Node<T> f = p.forelder;
-        while (f != null && (p == f.høyre || f.høyre == null)){
-            p = f; f = f.forelder;
-        }
-        return f == null ? null : førsteNode(f.høyre);
-    }
-
-
 
     @Override
     public Iterator<T> iterator()
