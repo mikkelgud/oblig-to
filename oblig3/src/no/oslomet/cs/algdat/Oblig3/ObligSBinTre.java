@@ -352,25 +352,70 @@ public class ObligSBinTre<T> implements beholder<T>
 
     public String[] grener()
     {
-        if(tom()){
-            return new String[0];
+        String[] streng = new String[0];
+
+        if(rot == null){
+            return streng;
+        }
+        streng = new String[1];
+        if(rot.høyre == null && rot.venstre == null){
+            streng[0] = "["+rot+"]";
+            return streng;
         }
 
-        StringBuilder s = new StringBuilder();
-        String[] streng = new String[1];
         Node<T> p = rot;
 
-        while (p.venstre != null || p.høyre != null){
-            if(p.venstre != null){
-                p = p.venstre;
-                s.append(p);
-            }
-            if (p.høyre != null){
-                p = p.høyre;
-                s.append(p);
-            }
+        while(p.venstre != null){
+            p = p.venstre;
         }
-      // streng[] = s.toString();
+        StringBuilder s = new StringBuilder();
+        int teller = 0;
+        int telleren = 0;
+        Node<T> q = p;
+        Node<T> blad;
+
+        while(nesteInorden(q) != null){
+            if(nesteInorden(q).venstre == null && nesteInorden(q).høyre == null){  //funnet bladnode
+                telleren++;
+            }
+            q = nesteInorden(q);
+        }
+
+        streng = new String[telleren];
+        q = p;
+        while(q.forelder != null){
+            s.insert(0,q.verdi+" ");
+            q = q.forelder;
+        }
+
+        s.insert(0, "[" + rot.verdi + ", ");
+        s.deleteCharAt(s.length()-1);
+        s.deleteCharAt(s.length()-1);
+        s.append("]");
+
+        streng[teller] = s.toString();
+        teller++;
+        q = p;
+
+        while (nesteInorden(q) != null){
+            if(nesteInorden(q).venstre == null && nesteInorden(q).høyre == null){
+                s = new StringBuilder();
+                blad = nesteInorden(q);
+
+                while (blad.forelder != null){
+                    s.insert(0,blad.verdi + ", ");
+                    blad = blad.forelder;
+                }
+                s.insert(0, "[" + rot.verdi + ", ");
+                s.deleteCharAt(s.length()-1);
+                s.deleteCharAt(s.length()-1);
+                s.append("]");
+
+                streng[teller-1] = s.toString();
+                teller++;
+            }
+            q = nesteInorden(q);
+        }
         return streng;
     }
 
