@@ -241,28 +241,26 @@ public class ObligSBinTre<T> implements beholder<T>
         return p.forelder;
     }
 
+
     @Override
     public String toString() {
         StringBuilder sb=new StringBuilder();
+        //Dersom listen er tom ønsker vi å skrive ut en tom liste.
         if (rot==null){
             sb.append("[]");
             return sb.toString();
         }
 
         sb.append("[");
+        //Instansierer første noden til roten
         Node<T> first=rot;
+
+        //  Itererer gjennom alle nodene mot venstre for å finne minste node.
         while (first.venstre!=null){
             first=first.venstre;
         }
-
-        if (first.forelder==null && first.høyre==null && first.venstre==null){
-            sb=new StringBuilder();
-            sb.append("["+first.verdi+"]");
-            return sb.toString();
-        }
-
+//        Bruker metoden neste Inorden metoden for å finne neste node
         while (nesteInorden(first)!=null){
-
             sb.append(first.verdi+", ");
             first=nesteInorden(first);
         }
@@ -278,19 +276,29 @@ public class ObligSBinTre<T> implements beholder<T>
 
         Stakk<Node<T>> stakk = new TabellStakk<>();
 
-        Node<T> p = rot;
+        Node<T> first=rot;
 
-        if (p.høyre == null){
-
-
+        if(first.venstre == null) {
+            while (nesteInorden(first) != null) {
+                stakk.leggInn(first);
+                first = nesteInorden(first);
             }
-            for (; p != null; p = p.høyre) {
-                stakk.leggInn(p);
+            stakk.leggInn(first);
+        }else{
+            //Setter first til laste :P
+            while (first.venstre != null){
+                first = first.venstre;
             }
+
+            while (nesteInorden(first) != null) {
+                stakk.leggInn(first);
+                first = nesteInorden(first);
+            }
+            stakk.leggInn(first);
+        }
 
          //Finner elementet lengst ut i listen
-
-        return "[5, 4, 3, 2, 1]";
+        return stakk.toString();
     }
 
     public String høyreGren()
